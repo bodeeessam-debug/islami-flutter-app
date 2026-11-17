@@ -1,0 +1,10 @@
+flutter_native_splash:
+  color: "#202020"
+  image: assets/logo/masgd_splash_resized.png
+  android_12:
+    color: "#202020"
+    image: assets/logo/masgd_splash_resized.png
+
+  android: true
+  ios: true
+  web: false
