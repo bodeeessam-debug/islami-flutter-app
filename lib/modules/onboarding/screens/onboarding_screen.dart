@@ -1,14 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islami_project_flutter/core/theme/app_colors.dart';
+import 'package:islami_project_flutter/modules/onboarding/widgets/dot_indicator/dot_indicator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/provider/onboarding_provider/onboarding_provider.dart';
 import '../../layout/screens/layout_screen.dart';
+import '../models/onboarding_model.dart';
 import '../widgets/onboarding_page/OnboardingPage.dart';
 
 class OnboardingScreen extends StatelessWidget {
-  const OnboardingScreen({super.key});
+  OnboardingScreen({super.key});
+
+  List<OnboardingModel> onboardingPages = [
+    OnboardingModel(
+      imagePath: 'assets/images/onboarding_1.png',
+      title: 'Welcome To Islami App',
+    ),
+
+    OnboardingModel(
+      imagePath: 'assets/images/onboarding_2.png',
+      title: 'Welcome To Islami',
+      description: 'We Are Very Excited To Have You In Our Community',
+    ),
+
+    OnboardingModel(
+      imagePath: 'assets/images/onboarding_3.png',
+      title: 'Reading the Quran',
+      description: 'Read, and your Lord is the Most Generous',
+    ),
+
+    OnboardingModel(
+      imagePath: 'assets/images/onboarding_4.png',
+      title: 'Bearish',
+      description: 'Praise the name of your Lord, the Most High',
+    ),
+
+    OnboardingModel(
+      imagePath: 'assets/images/onboarding_5.png',
+      title: 'Holy Quran Radio',
+      description:
+      'You can listen to the Holy Quran Radio through the application for free and easily',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -30,38 +64,21 @@ class OnboardingScreen extends StatelessWidget {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(16),
-                    child: PageView(
+                      child: PageView.builder(
                       controller: provider.pageController,
                       onPageChanged: provider.onPageChanged,
-                      children: const [
-                        OnboardingPage(
-                          imagePath: 'assets/images/onboarding_1.png',
-                          title: 'Welcome To Islami App',
-                        ),
-                        OnboardingPage(
-                          imagePath: 'assets/images/onboarding_2.png',
-                          title: 'Welcome To Islami',
-                          description: 'Read the Holy Quran',
-                        ),
-                        OnboardingPage(
-                          imagePath: 'assets/images/onboarding_3.png',
-                          title: 'Reading the Quran',
-                          description:
-                              'Read, and your Lord is the Most Generous',
-                        ),
-                        OnboardingPage(
-                          imagePath: 'assets/images/onboarding_4.png',
-                          title: 'Bearish',
-                          description:
-                              'Praise the name of your Lord, the Most High',
-                        ),
-                        OnboardingPage(
-                          imagePath: 'assets/images/onboarding_5.png',
-                          title: 'Holy Quran Radio',
-                          description: 'You can listen to the Holy Quran Radio through the application for free and easily',
-                        ),
-                      ],
-                    ),
+                        itemCount: onboardingPages.length,
+
+                        itemBuilder: (context, index) {
+                          final page = onboardingPages[index];
+
+                          return OnboardingPage(
+                            imagePath: page.imagePath,
+                            title: page.title,
+                            description: page.description,
+                          );
+                        },
+                      )
                   ),
                 ),
 
@@ -84,15 +101,7 @@ class OnboardingScreen extends StatelessWidget {
                       children: List.generate(provider.totalPages, (index) {
                         bool isSelected = provider.currentPage == index;
 
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 6.w),
-                          width: isSelected ? 17.w : 7.w,
-                          height: 7.h,
-                          decoration: BoxDecoration(
-                            color: isSelected ? AppColors.gold : Colors.grey,
-                            borderRadius: BorderRadius.circular(20.r),
-                          ),
-                        );
+                        return DotIndicator(isSelected: isSelected);
                       }),
                     ),
 
